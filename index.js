@@ -36,10 +36,12 @@ export const indexData = () => {
 };
 
 export const indexDataCustomTokenizer = (tokenizerType = "strict") => {
+  console.info('\n%c--------- indexDataCustomTokenizer --------- \n', 'background:yellow; color:blue; font-weight:600;');
   const index = new Document({
     document: { index: ["engine", "title"], tag: "tag" },
     tokenize: tokenizerType,
   });
+  console.log('data', data);
   data.forEach((item) => index.add(item));
 
   return index;
@@ -53,10 +55,14 @@ export const indexTitleData = () => {
 };
 
 function main(searchIndex, searchString) {
+  console.info('\n%c--------- main --------- \n', 'background:yellow; color:blue; font-weight:600;');
+  console.log('searchString', searchString);
   const q = searchString || process.argv.slice(2).join(" ");
-  console.log(q);
+  console.log('q', q);
 
-  const resultSet = searchIndex.search(q, { tag: q });
+  // const resultSet = searchIndex.search(q, { tag: q });
+  const resultSet = searchIndex.search({ tag: q });
+  console.log('resultSet', resultSet);
   // when you have multiple indexes (`index: ["engine", "title"]`),
   // your result set can look something like this:
   // [
